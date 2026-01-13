@@ -1,5 +1,14 @@
 <template>
 	<view class="container">
+		<!-- H5搜索框 -->
+		<!-- #ifdef H5 -->
+		<view class="h5-search-box">
+			<view class="search-input" @click="goToSearch">
+				<text class="search-icon">🔍</text>
+				<text class="search-placeholder">请输入商品 如：手机</text>
+			</view>
+		</view>
+		<!-- #endif -->
 		<!-- 小程序头部兼容 -->
 		<!-- #ifdef MP -->
 		<view class="mp-search-box">
@@ -317,11 +326,28 @@
 					url: `/pages/product/hotProductList`
 				})
 			},
+			//H5搜索跳转
+			goToSearch() {
+				uni.navigateTo({
+					url: `/pages/product/list`
+				})
+			},
 		},
 		// #ifndef MP
 		// 标题栏input搜索框点击
 		onNavigationBarSearchInputClicked: async function(e) {
-			this.$api.msg('点击了搜索框');
+			uni.navigateTo({
+				url: `/pages/product/list`
+			})
+		},
+		//搜索输入确认
+		onNavigationBarSearchInputConfirmed: async function(e) {
+			const keyword = e.text;
+			if(keyword && keyword.trim()) {
+				uni.navigateTo({
+					url: `/pages/product/list?keyword=${encodeURIComponent(keyword)}`
+				})
+			}
 		},
 		//点击导航栏 buttons 时触发
 		onNavigationBarButtonTap(e) {
@@ -347,6 +373,42 @@
 </script>
 
 <style lang="scss">
+	/* #ifdef H5 */
+	.h5-search-box {
+		position: fixed;
+		left: 0;
+		top: 0;
+		z-index: 999;
+		width: 100%;
+		padding: 10px 15px;
+		background: #fff;
+
+		.search-input {
+			display: flex;
+			align-items: center;
+			height: 36px;
+			padding: 0 15px;
+			background: #f5f5f5;
+			border-radius: 18px;
+
+			.search-icon {
+				font-size: 16px;
+				margin-right: 8px;
+			}
+
+			.search-placeholder {
+				font-size: 14px;
+				color: #999;
+			}
+		}
+	}
+
+	/* 为搜索框留出空间 */
+	.container {
+		padding-top: 56px;
+	}
+	/* #endif */
+
 	/* #ifdef MP */
 	.mp-search-box {
 		position: absolute;

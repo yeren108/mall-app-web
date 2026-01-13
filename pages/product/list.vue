@@ -1,5 +1,16 @@
 <template>
 	<view class="content">
+		<!-- H5搜索栏 -->
+		<!-- #ifdef H5 -->
+		<view class="search-bar">
+			<view class="search-input-wrapper">
+				<text class="search-icon">🔍</text>
+				<input class="search-input" type="text" :value="searchParam.keyword" placeholder="请输入商品名称" @input="onSearchInput" @confirm="doSearch" />
+				<text class="search-btn" @click="doSearch">搜索</text>
+			</view>
+		</view>
+		<!-- #endif -->
+
 		<view class="navbar" :style="{position:headerPosition,top:headerTop}">
 			<view class="nav-item" :class="{current: filterIndex === 0}" @click="tabClick(0)">
 				综合排序
@@ -68,10 +79,12 @@
 				priceOrder: 0, //1 价格从低到高 2价格从高到低
 				cateList: [],
 				productList: [],
+				searchKeyword: '', //搜索关键词
 				searchParam: {
 					productCategoryId: null,
+					keyword: null,
 					pageNum: 1,
-					pageSize: 6,
+					pageSize: 20,
 					sort: 0
 				}
 			};
@@ -82,6 +95,10 @@
 			this.headerTop = document.getElementsByTagName('uni-page-head')[0].offsetHeight + 'px';
 			// #endif
 			this.searchParam.productCategoryId = options.sid;
+			// 支持关键词搜索
+			if(options.keyword) {
+				this.searchParam.keyword = decodeURIComponent(options.keyword);
+			}
 			this.loadCateList(options.fid, options.sid);
 			this.loadData();
 		},
@@ -138,7 +155,16 @@
 						this.searchParam.sort = 4;
 					}
 				}
-				searchProductList(this.searchParam).then(response => {
+
+				// 清理空参数，避免传递 null/undefined 导致后端报错
+				const cleanParams = {};
+				for (let key in this.searchParam) {
+					if (this.searchParam[key] !== null && this.searchParam[key] !== undefined) {
+						cleanParams[key] = this.searchParam[key];
+					}
+				}
+
+				searchProductList(cleanParams).then(response => {
 					let productList = response.data.list;
 					if (response.data.list.length === 0) {
 						//没有更多了
@@ -211,12 +237,77 @@
 					url: `/pages/product/product?id=${id}`
 				})
 			},
-			stopPrevent() {}
+			stopPrevent() {},
+			//H5搜索输入
+			onSearchInput(e) {
+				this.searchKeyword = e.detail.value;
+			},
+			//执行搜索
+			doSearch() {
+				if (this.searchKeyword && this.searchKeyword.trim()) {
+					this.searchParam.keyword = this.searchKeyword.trim();
+				} else {
+					this.searchParam.keyword = null;
+				}
+				this.loadData('refresh', 1);
+			}
 		},
 	}
 </script>
 
 <style lang="scss">
+	/* #ifdef H5 */
+	.search-bar {
+		position: fixed;
+		left: 0;
+		top: 44px;
+		z-index: 999;
+		width: 100%;
+		padding: 10px 15px;
+		background: #fff;
+		box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+		.search-input-wrapper {
+			display: flex;
+			align-items: center;
+			height: 40px;
+			padding: 0 15px;
+			background: #f5f5f5;
+			border-radius: 20px;
+
+			.search-icon {
+				font-size: 18px;
+				margin-right: 10px;
+			}
+
+			.search-input {
+				flex: 1;
+				height: 100%;
+				font-size: 14px;
+				border: none;
+				background: transparent;
+			}
+
+			.search-btn {
+				margin-left: 10px;
+				padding: 5px 15px;
+				font-size: 14px;
+				color: #fff;
+				background: #fa436a;
+				border-radius: 15px;
+			}
+		}
+	}
+
+	.content {
+		padding-top: 164px !important;
+	}
+
+	.navbar {
+		top: 104px !important;
+	}
+	/* #endif */
+
 	page,
 	.content {
 		background: $page-color-base;
