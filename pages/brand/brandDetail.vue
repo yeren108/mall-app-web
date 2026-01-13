@@ -103,11 +103,23 @@
 					deleteBrandAttention({
 						brandId: this.brand.id
 					}).then(response => {
+						if (response.code === 200) {
+							uni.showToast({
+								title: "取消收藏成功！",
+								icon: 'none'
+							});
+							this.favoriteStatus = !this.favoriteStatus;
+						} else {
+							uni.showToast({
+								title: "操作失败",
+								icon: 'none'
+							});
+						}
+					}).catch(error => {
 						uni.showToast({
-							title: "取消收藏成功！",
+							title: "操作失败",
 							icon: 'none'
 						});
-						this.favoriteStatus = !this.favoriteStatus;
 					});
 				} else {
 					//收藏
@@ -118,11 +130,23 @@
 						brandCity : ""
 					}
 					createBrandAttention(brandAttention).then(response=>{
+						if (response.code === 200 && response.data > 0) {
+							uni.showToast({
+								title: "收藏成功！",
+								icon: 'none'
+							});
+							this.favoriteStatus = !this.favoriteStatus;
+						} else {
+							uni.showToast({
+								title: "收藏失败",
+								icon: 'none'
+							});
+						}
+					}).catch(error => {
 						uni.showToast({
-							title: "收藏成功！",
+							title: "收藏失败",
 							icon: 'none'
 						});
-						this.favoriteStatus = !this.favoriteStatus;
 					});
 				}
 			},

@@ -184,6 +184,8 @@
 				uni.showModal({
 					title: '提示',
 					content: '是否要取消该订单？',
+					confirmText: '确定',
+					cancelText: '取消',
 					success: function(res) {
 						if (res.confirm) {
 							uni.showLoading({
@@ -213,6 +215,8 @@
 				uni.showModal({
 					title: '提示',
 					content: '是否要确认收货？',
+					confirmText: '确定',
+					cancelText: '取消',
 					success: function(res) {
 						if (res.confirm) {
 							uni.showLoading({

@@ -167,7 +167,10 @@
 			clearCart() {
 				clearCartList().then(response=>{
 					uni.showModal({
+						title: '提示',
 						content: '清空购物车？',
+						confirmText: '确定',
+						cancelText: '取消',
 						success: (e) => {
 							if (e.confirm) {
 								this.cartList = [];

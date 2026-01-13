@@ -65,6 +65,8 @@
 				uni.showModal({
 				    title: '提示',
 				    content: '是否要清空所有浏览记录？',
+				    confirmText: '确定',
+				    cancelText: '取消',
 				    success: function (res) {
 				        if (res.confirm) {
 				            clearProductCollection().then(response=>{

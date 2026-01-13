@@ -67,6 +67,8 @@
 				uni.showModal({
 				    title: '提示',
 				    content: '是否要删除该地址',
+				    confirmText: '确定',
+				    cancelText: '取消',
 				    success: function (res) {
 				        if (res.confirm) {
 				            deleteAddress(id).then(response=>{

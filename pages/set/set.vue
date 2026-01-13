@@ -59,7 +59,10 @@
 			//退出登录
 			toLogout(){
 				uni.showModal({
+				    title: '提示',
 				    content: '确定要退出登录么',
+				    confirmText: '确定',
+				    cancelText: '取消',
 				    success: (e)=>{
 				    	if(e.confirm){
 				    		this.logout();
