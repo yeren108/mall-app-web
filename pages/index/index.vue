@@ -36,19 +36,19 @@
 		</view>
 		<!-- 头部功能区 -->
 		<view class="cate-section">
-			<view class="cate-item">
+			<view class="cate-item disabled" @click="showNotAvailable">
 				<image src="/static/temp/c3.png"></image>
 				<text>专题</text>
 			</view>
-			<view class="cate-item">
+			<view class="cate-item disabled" @click="showNotAvailable">
 				<image src="/static/temp/c5.png"></image>
 				<text>话题</text>
 			</view>
-			<view class="cate-item">
+			<view class="cate-item disabled" @click="showNotAvailable">
 				<image src="/static/temp/c6.png"></image>
 				<text>优选</text>
 			</view>
-			<view class="cate-item">
+			<view class="cate-item disabled" @click="showNotAvailable">
 				<image src="/static/temp/c7.png"></image>
 				<text>特惠</text>
 			</view>
@@ -332,6 +332,14 @@
 					url: `/pages/product/list`
 				})
 			},
+			//功能暂未开放提示
+			showNotAvailable() {
+				uni.showToast({
+					title: '功能暂未开放',
+					icon: 'none',
+					duration: 2000
+				});
+			},
 		},
 		// #ifndef MP
 		// 标题栏input搜索框点击
@@ -555,6 +563,19 @@
 			align-items: center;
 			font-size: $font-sm + 2upx;
 			color: $font-color-dark;
+
+			&.disabled {
+				opacity: 0.5;
+
+				image {
+					opacity: .4;
+					box-shadow: none;
+				}
+
+				text {
+					color: #999999;
+				}
+			}
 		}
 
 		/* 原图标颜色太深,不想改图了,所以加了透明度 */

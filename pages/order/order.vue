@@ -41,11 +41,11 @@
 							<button class="action-btn recom" @click="payOrder(item.id)">立即付款</button>
 						</view>
 						<view class="action-box b-t" v-if="item.status == 2">
-							<button class="action-btn" >查看物流</button>
+							<button class="action-btn disabled" @click="showNotAvailable">查看物流</button>
 							<button class="action-btn recom" @click="receiveOrder(item.id)">确认收货</button>
 						</view>
 						<view class="action-box b-t" v-if="item.status == 3">
-							<button class="action-btn recom" >评价商品</button>
+							<button class="action-btn recom disabled" @click="showNotAvailable">评价商品</button>
 						</view>
 					</view>
 
@@ -292,6 +292,14 @@
 				}
 				return totalQuantity;
 			},
+			//功能暂未开放提示
+			showNotAvailable() {
+				uni.showToast({
+					title: '功能暂未开放',
+					icon: 'none',
+					duration: 2000
+				});
+			},
 		},
 	}
 </script>
@@ -514,6 +522,16 @@
 
 				&:after {
 					border-color: #f7bcc8;
+				}
+			}
+
+			&.disabled {
+				color: #999999;
+				background: #f5f5f5;
+				opacity: 0.6;
+
+				&:after {
+					border-color: #e0e0e0;
 				}
 			}
 		}

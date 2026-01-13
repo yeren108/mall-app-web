@@ -430,11 +430,23 @@
 					deleteProductCollection({
 						productId: this.product.id
 					}).then(response => {
+						if (response.code === 200) {
+							uni.showToast({
+								title: "取消收藏成功！",
+								icon: 'none'
+							});
+							this.favorite = !this.favorite;
+						} else {
+							uni.showToast({
+								title: "操作失败",
+								icon: 'none'
+							});
+						}
+					}).catch(error => {
 						uni.showToast({
-							title: "取消收藏成功！",
+							title: "操作失败",
 							icon: 'none'
 						});
-						this.favorite = !this.favorite;
 					});
 				} else {
 					//收藏
@@ -446,11 +458,23 @@
 						productSubTitle: this.product.subTitle
 					}
 					createProductCollection(productCollection).then(response => {
+						if (response.code === 200 && response.data > 0) {
+							uni.showToast({
+								title: "收藏成功！",
+								icon: 'none'
+							});
+							this.favorite = !this.favorite;
+						} else {
+							uni.showToast({
+								title: "收藏失败",
+								icon: 'none'
+							});
+						}
+					}).catch(error => {
 						uni.showToast({
-							title: "收藏成功！",
+							title: "收藏失败",
 							icon: 'none'
 						});
-						this.favorite = !this.favorite;
 					});
 				}
 			},
