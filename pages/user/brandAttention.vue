@@ -2,7 +2,7 @@
 	<view class="content">
 		<!-- 空白页 -->
 		<empty v-if="brandList==null||brandList.length === 0"></empty>
-		<view class="hot-section">
+		<view class="hot-section" v-if="brandList.length > 0">
 			<view v-for="(item, index) in brandList" :key="index" class="guess-item" @click="navToDetailPage(item)">
 				<view class="image-wrapper">
 					<image :src="item.brandLogo" mode="aspectFit"></image>
@@ -11,8 +11,8 @@
 					<text class="title clamp">{{item.brandName}}</text>
 				</view>
 			</view>
+			<uni-load-more :status="loadingType"></uni-load-more>
 		</view>
-		<uni-load-more :status="loadingType"></uni-load-more>
 	</view>
 </template>
 
@@ -120,6 +120,16 @@
 							uni.stopPullDownRefresh();
 						}
 					}
+				}).catch(error => {
+					console.error('获取关注列表失败:', error);
+					this.loadingType = 'more';
+					if (type === 'refresh') {
+						if (loading == 1) {
+							uni.hideLoading()
+						} else {
+							uni.stopPullDownRefresh();
+						}
+					}
 				});
 			},
 			//详情
@@ -138,18 +148,22 @@
 	page,
 	.content {
 		background: $page-color-base;
+		width: 100vw;
 	}
 
 	.hot-section {
 		display: flex;
 		flex-wrap: wrap;
+		padding: 0 30upx;
 		margin-top: 16upx;
+		background: #fff;
+		width: 100%;
+		box-sizing: border-box;
 
 		.guess-item {
 			display: flex;
 			flex-direction: row;
 			width: 100%;
-			padding: 0 30upx;
 			margin-bottom: 16upx;
 			background-color: #fff;
 			align-items: center;

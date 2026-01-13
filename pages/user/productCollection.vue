@@ -2,7 +2,7 @@
 	<view class="content">
 		<!-- 空白页 -->
 		<empty v-if="productList==null||productList.length === 0"></empty>
-		<view class="hot-section">
+		<view class="hot-section" v-if="productList.length > 0">
 			<view v-for="(item, index) in productList" :key="index" class="guess-item" @click="navToDetailPage(item)">
 				<view class="image-wrapper">
 					<image :src="item.productPic" mode="aspectFill"></image>
@@ -15,8 +15,8 @@
 					</view>
 				</view>
 			</view>
+			<uni-load-more :status="loadingType"></uni-load-more>
 		</view>
-		<uni-load-more :status="loadingType"></uni-load-more>
 	</view>
 </template>
 
@@ -124,6 +124,16 @@
 							uni.stopPullDownRefresh();
 						}
 					}
+				}).catch(error => {
+					console.error('获取收藏列表失败:', error);
+					this.loadingType = 'more';
+					if (type === 'refresh') {
+						if (loading == 1) {
+							uni.hideLoading()
+						} else {
+							uni.stopPullDownRefresh();
+						}
+					}
 				});
 			},
 			//详情
@@ -142,6 +152,7 @@
 	page,
 	.content {
 		background: $page-color-base;
+		width: 100vw;
 	}
 
 	.hot-section {
@@ -150,6 +161,8 @@
 		padding: 0 30upx;
 		margin-top: 16upx;
 		background: #fff;
+		width: 100%;
+		box-sizing: border-box;
 
 		.guess-item {
 			display: flex;
@@ -202,12 +215,6 @@
 		.hor-txt{
 			display: flex;
 			justify-content: space-between;
-		}
-
-		.time {
-			font-size: $font-sm;
-			color: $font-color-dark;
-			line-height: 80upx;
 		}
 	}
 </style>

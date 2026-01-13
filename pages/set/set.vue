@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<view class="list-cell b-b m-t" @click="navTo('个人资料')" hover-class="cell-hover" :hover-stay-time="50">
+		<view class="list-cell b-b m-t disabled">
 			<text class="cell-tit">个人资料</text>
 			<text class="cell-more yticon icon-you"></text>
 		</view>
@@ -8,7 +8,7 @@
 			<text class="cell-tit">收货地址</text>
 			<text class="cell-more yticon icon-you"></text>
 		</view>
-		<view class="list-cell" @click="navTo('实名认证')" hover-class="cell-hover" :hover-stay-time="50">
+		<view class="list-cell disabled">
 			<text class="cell-tit">实名认证</text>
 			<text class="cell-more yticon icon-you"></text>
 		</view>
@@ -17,15 +17,11 @@
 			<text class="cell-tit">消息推送</text>
 			<switch checked color="#fa436a" @change="switchChange" />
 		</view>
-		<view class="list-cell m-t b-b" @click="navTo('清除缓存')" hover-class="cell-hover" :hover-stay-time="50">
+		<view class="list-cell m-t b-b disabled">
 			<text class="cell-tit">清除缓存</text>
 			<text class="cell-more yticon icon-you"></text>
 		</view>
-		<view class="list-cell b-b" @click="navToOuter('https://github.com/macrozheng/mall')" hover-class="cell-hover" :hover-stay-time="50">
-			<text class="cell-tit">关于mall-app-web</text>
-			<text class="cell-more yticon icon-you"></text>
-		</view>
-		<view class="list-cell">
+		<view class="list-cell disabled">
 			<text class="cell-tit">检查更新</text>
 			<text class="cell-tip">当前版本 1.0.0</text>
 			<text class="cell-more yticon icon-you"></text>
@@ -131,6 +127,18 @@
 		}
 		switch{
 			transform: translateX(16upx) scale(.84);
+		}
+		&.disabled{
+			opacity: 0.5;
+			.cell-tit{
+				color: #999999;
+			}
+			.cell-tip{
+				color: #999999;
+			}
+			.cell-more{
+				color: #999999;
+			}
 		}
 	}
 </style>

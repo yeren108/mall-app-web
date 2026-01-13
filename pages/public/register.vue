@@ -3,15 +3,17 @@
 		<view class="left-bottom-sign"></view>
 		<view class="back-btn yticon icon-zuojiantou-up" @click="navBack"></view>
 		<view class="right-top-sign"></view>
-		<!-- 设置白色背景防止软键盘把下部绝对定位元素顶上来盖住输入框等 -->
 		<view class="wrapper">
+			<view class="left-top-sign">REGISTER</view>
+			<view class="welcome">
+				注册功能
+			</view>
 			<view class="empty">
-				<image src="/static/qrcode_for_macrozheng_258.jpg" mode="aspectFit"></image>
 				<view class="empty-tips">
-					扫描上方二维码<view class="navigator">关注公众号</view>，
+					注册功能暂未开放
 				</view>
 				<view class="empty-tips">
-					回复<view class="navigator">会员</view>获取体验账号。
+					请联系管理员获取账号
 				</view>
 			</view>
 		</view>
@@ -37,36 +39,6 @@
 <style lang='scss'>
 	page {
 		background: #fff;
-	}
-	
-	.empty {
-		position: fixed;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100vh;
-		padding-bottom: 100upx;
-		display: flex;
-		justify-content: center;
-		flex-direction: column;
-		align-items: center;
-		background: #fff;
-	
-		image {
-			width: 420upx;
-			height: 420upx;
-			margin-bottom: 30upx;
-		}
-		.empty-tips {
-			display: flex;
-			font-size: $font-sm+16upx;
-			color: $font-color-disabled;
-		
-			.navigator {
-				color: $uni-color-primary;
-				margin-left: 0upx;
-			}
-		}
 	}
 
 	.container {
@@ -128,7 +100,6 @@
 			top: 0;
 			transform: rotate(-50deg);
 			border-radius: 50px 0 0 0;
-			/* background: pink; */
 		}
 	}
 
@@ -139,5 +110,29 @@
 		border: 100upx solid #d0d1fd;
 		border-radius: 50%;
 		padding: 180upx;
+	}
+
+	.welcome {
+		position: relative;
+		left: 50upx;
+		top: -90upx;
+		font-size: 46upx;
+		color: #555;
+		text-shadow: 1px 0px 1px rgba(0, 0, 0, .3);
+	}
+
+	.empty {
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		align-items: center;
+		padding-top: 100upx;
+
+		.empty-tips {
+			display: flex;
+			font-size: $font-sm+16upx;
+			color: $font-color-disabled;
+			margin-bottom: 20upx;
+		}
 	}
 </style>

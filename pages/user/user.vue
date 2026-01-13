@@ -65,7 +65,7 @@
 					<text class="yticon icon-yishouhuo"></text>
 					<text>待收货</text>
 				</view>
-				<view class="order-item" hover-class="common-hover"  :hover-stay-time="50">
+				<view class="order-item disabled">
 					<text class="yticon icon-shouhoutuikuan"></text>
 					<text>退款/售后</text>
 				</view>
@@ -76,7 +76,7 @@
 				<list-cell icon="icon-lishijilu" iconColor="#e07472" title="我的足迹" @eventClick="navTo('/pages/user/readHistory')"></list-cell>
 				<list-cell icon="icon-shoucang" iconColor="#5fcda2" title="我的关注" @eventClick="navTo('/pages/user/brandAttention')"></list-cell>
 				<list-cell icon="icon-shoucang_xuanzhongzhuangtai" iconColor="#54b4ef" title="我的收藏" @eventClick="navTo('/pages/user/productCollection')"></list-cell>
-				<list-cell icon="icon-pingjia" iconColor="#ee883b" title="我的评价"></list-cell>
+				<list-cell icon="icon-pingjia" iconColor="#999999" title="我的评价" disabled></list-cell>
 				<list-cell icon="icon-shezhi1" iconColor="#e07472" title="设置" border="" @eventClick="navTo('/pages/set/set')"></list-cell>
 			</view>
 		</view>
@@ -340,6 +340,13 @@
 		}
 		.icon-shouhoutuikuan{
 			font-size:44upx;
+		}
+		.disabled{
+			color: #999999;
+			opacity: 0.5;
+		}
+		.disabled .yticon{
+			color: #999999;
 		}
 	}
 	.history-section{
